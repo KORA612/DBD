@@ -2,10 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h2>Welcome to the Dashboard</h2>
-    <a href="{{ url_for('logout') }}">Logout</a>
+    <div class="container">
+        <h1>Dashboard</h1>
+        {% if datasets %}
+            <h2>Your Datasets</h2>
+            <ul>
+                {% for dataset in datasets %}
+                    <li>{{ dataset.name }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No datasets found.</p>
+        {% endif %}
+        <a href="{{ url_for('upload') }}" class="btn btn-primary">Upload Dataset</a>
+        <a href="{{ url_for('logout') }}" class="btn btn-secondary">Logout</a>
+    </div>
 </body>
 </html>
