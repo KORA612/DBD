@@ -1,9 +1,10 @@
 from flask import Flask, render_template, redirect, url_for, flash, request, session, g
 from werkzeug.utils import secure_filename
 import os
-
+import pandas as pd
 from forms import RegistrationForm, LoginForm, DatasetUploadForm
 import db
+from visualize import visualize_dataset, get_user_input, get_plot_choice
 
 app = Flask(__name__)
 app.config.from_object('config.Config')
@@ -20,14 +21,12 @@ def teardown_db(exception):
 def home():
     return render_template('home.html')
 
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         db.insert_user(form.username.data, form.email.data, form.password.data)
         flash('Account created!', 'success')
-        # Redirect to dashboard after successful registration
         return redirect(url_for('dashboard'))
     return render_template('register.html', form=form)
 
@@ -38,7 +37,6 @@ def login():
         user = db.get_user_by_email(form.email.data)
         if user and user['password'] == form.password.data:
             session['user_id'] = user['id']
-            # Redirect to dashboard after successful login
             return redirect(url_for('dashboard'))
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
@@ -71,6 +69,19 @@ def upload():
         flash('Dataset uploaded successfully!', 'success')
         return redirect(url_for('dashboard'))
     return render_template('upload.html', form=form)
+
+@app.route('/visualize', methods=['GET', 'POST'])
+def visualize():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    if request.method == 'POST':
+        dataset_id = request.form['dataset_id']
+        dataset = db.get_dataset_by_id(dataset_id)
+        file_path = dataset['file_path']
+        features = visualize_dataset(file_path)
+        return render_template('visualize.html', features=features)
+    else:
+        return redirect(url_for('dashboard'))
 
 if __name__ == '__main__':
     with app.app_context():

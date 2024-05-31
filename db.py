@@ -37,6 +37,14 @@ def create_tables():
                 FOREIGN KEY (user_id) REFERENCES user(id)
             )
         """)
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS feature (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(150) NOT NULL,
+                dataset_id INT NOT NULL,
+                FOREIGN KEY (dataset_id) REFERENCES dataset(id)
+            )
+        """)
         db.commit()
         cursor.close()
 
@@ -81,3 +89,19 @@ def get_datasets_by_user_id(user_id):
     datasets = cursor.fetchall()
     cursor.close()
     return datasets
+
+def get_dataset_features(dataset_id):
+    db = connect_db()
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("SELECT name FROM feature WHERE dataset_id = %s", (dataset_id,))
+    features = [row['name'] for row in cursor.fetchall()]
+    cursor.close()
+    return features
+
+def get_dataset_by_id(dataset_id):
+    db = connect_db()
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM dataset WHERE id = %s", (dataset_id,))
+    dataset = cursor.fetchone()
+    cursor.close()
+    return dataset

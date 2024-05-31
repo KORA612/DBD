@@ -11,11 +11,14 @@
         <h1>Dashboard</h1>
         {% if datasets %}
             <h2>Your Datasets</h2>
-            <ul>
-                {% for dataset in datasets %}
-                    <li>{{ dataset.name }}</li>
-                {% endfor %}
-            </ul>
+            <form action="{{ url_for('visualize') }}" method="post">
+                <select name="dataset_id">
+                    {% for dataset in datasets %}
+                        <option value="{{ dataset.id }}">{{ dataset.name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Visualize</button>
+            </form>
         {% else %}
             <p>No datasets found.</p>
         {% endif %}
