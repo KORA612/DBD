@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Select Features</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Select Features to Plot</h1>
+      <form
+        action="{{ url_for('select_features', dataset_id=dataset_id) }}"
+        method="post"
+      >
+        <label for="x_feature">X Feature:</label>
+        <select name="x_feature" id="x_feature">
+          {% for feature in features %}
+          <option value="{{ feature }}">{{ feature }}</option>
+          {% endfor %}</select
+        ><br /><br />
+        <label for="y_feature">Y Feature:</label>
+        <select name="y_feature" id="y_feature">
+          {% for feature in features %}
+          <option value="{{ feature }}">{{ feature }}</option>
+          {% endfor %}</select
+        ><br /><br />
+        <label for="plot_choice">Plot Type:</label>
+        <select name="plot_choice" id="plot_choice">
+          <option value="1">Scatter Plot</option>
+          <option value="2">Line Plot</option>
+          <option value="3">Histogram</option>
+          <option value="4">Box Plot</option>
+          <option value="5">Pair Plot</option></select
+        ><br /><br />
+        <input type="submit" value="Plot" />
+      </form>
+      <br />
+      <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+    </div>
+  </body>
+</html>

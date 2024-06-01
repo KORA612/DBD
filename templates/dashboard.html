@@ -9,21 +9,19 @@
 <body>
     <div class="container">
         <h1>Dashboard</h1>
-        {% if datasets %}
-            <h2>Your Datasets</h2>
-            <form action="{{ url_for('visualize') }}" method="post">
-                <select name="dataset_id">
-                    {% for dataset in datasets %}
-                        <option value="{{ dataset.id }}">{{ dataset.name }}</option>
-                    {% endfor %}
-                </select>
-                <button type="submit">Visualize</button>
-            </form>
-        {% else %}
-            <p>No datasets found.</p>
-        {% endif %}
-        <a href="{{ url_for('upload') }}" class="btn btn-primary">Upload Dataset</a>
-        <a href="{{ url_for('logout') }}" class="btn btn-secondary">Logout</a>
+        <nav>
+            <a href="{{ url_for('upload') }}">Upload Dataset</a> | 
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+        <h2>Your Datasets</h2>
+        <ul>
+            {% for dataset in datasets %}
+            <li>
+                {{ dataset.name }} 
+                <a href="{{ url_for('select_features', dataset_id=dataset.id) }}">Visualize</a>
+            </li>
+            {% endfor %}
+        </ul>
     </div>
 </body>
 </html>
