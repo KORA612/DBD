@@ -10,6 +10,7 @@
     <div class="container">
         <h1>Visualize Dataset</h1>
         <form action="{{ url_for('visualize') }}" method="post" class="visualize-form">
+            <input type="hidden" name="dataset_id" value="{{ dataset_id }}">
             <div class="form-group">
                 <label for="x_feature">X Feature:</label>
                 <select name="x_feature" id="x_feature">

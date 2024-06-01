@@ -74,14 +74,34 @@ def upload():
 def visualize():
     if 'user_id' not in session:
         return redirect(url_for('login'))
+    
     if request.method == 'POST':
-        dataset_id = request.form['dataset_id']
+        print("Form submitted successfully!")  # Debugging message
+        dataset_id = request.form.get('dataset_id')
+        if not dataset_id:
+            flash('Please select a dataset.', 'danger')
+            return redirect(url_for('dashboard'))
+        
         dataset = db.get_dataset_by_id(dataset_id)
-        file_path = dataset['file_path']
+        if not dataset:
+            flash('Dataset not found.', 'danger')
+            return redirect(url_for('dashboard'))
+        
+        file_path = dataset['file_path']  # Extract file_path from the dataset object
+        
         features = visualize_dataset(file_path)
-        return render_template('visualize.html', features=features)
+        return render_template('visualize.html', features=features, dataset_id=dataset_id)
     else:
+        print("GET request received!")  # Debugging message
         return redirect(url_for('dashboard'))
+
+
+
+@app.route('/result')
+def result():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    return render_template('visualize.html')
 
 if __name__ == '__main__':
     with app.app_context():
