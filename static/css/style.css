@@ -27,6 +27,28 @@ a:hover {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    background-color:#d1ced4;
+    padding: 80px;
+    border-radius: 40px;
+    border: 2px solid #333;
+}
+
+#backToDashboard{
+    color: #0056b3;
+}
+
+.container h3{
+    text-align: center;
+}
+.buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .form-group {

@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
     <div class="container">
-        <h1>Welcome to the Data Visualizer App</h1>
-        <p>This is the home page of the app.</p>
+      <h1>Welcome to the Data Visualizer App</h1>
+      <h3>Feel the Data through technology.</h3>
+      <div class="buttons">
         <a href="{{ url_for('register') }}" class="btn btn-primary">Register</a>
         <a href="{{ url_for('login') }}" class="btn btn-secondary">Login</a>
+      </div>
     </div>
-</body>
+  </body>
 </html>

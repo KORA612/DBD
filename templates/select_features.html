@@ -13,6 +13,7 @@
     <div class="container">
       <h1>Select Features to Plot</h1>
       <form
+        style="display: flex; justify-content: center; flex-direction: column"
         action="{{ url_for('select_features', dataset_id=dataset_id) }}"
         method="post"
       >
@@ -36,10 +37,14 @@
           <option value="4">Box Plot</option>
           <option value="5">Pair Plot</option></select
         ><br /><br />
-        <input type="submit" value="Plot" />
+        <input class="btn btn-primary" type="submit" value="Plot" />
       </form>
       <br />
-      <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+      <div class="buttons">
+        <a id="backToDashboard" href="{{ url_for('dashboard') }}"
+          >Back to Dashboard</a
+        >
+      </div>
     </div>
   </body>
 </html>
