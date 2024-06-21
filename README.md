@@ -1,4 +1,5 @@
 Data Visualization Web Application
+
 This is a web application built with Flask for visualizing datasets uploaded by users. Users can upload CSV files, select features, and choose from various plot types to visualize their data.
 
 Features
